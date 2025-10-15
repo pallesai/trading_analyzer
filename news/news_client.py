@@ -6,80 +6,14 @@ from datetime import datetime
 
 
 class NewsClient:
-    """
-    A client for retrieving stock news from Yahoo Finance API.
-    
-    This class provides access to recent news articles related to specific stock symbols.
-    News data includes headlines, summaries, publication dates, and source links.
-    
-    The client uses the yfinance library which accesses Yahoo Finance's public news API.
-    All methods include proper error handling and return structured data.
-    
-    Example:
-        >>> from news import NewsClient
-        >>> client = NewsClient()
-        >>> news = client.get_news("AAPL", limit=5)
-        >>> summary = client.get_news_summary("AAPL", limit=3)
-    
-    Note:
-        - News data availability varies significantly by symbol
-        - Major stocks typically have more comprehensive news coverage
-        - Articles are typically from the last few days to weeks
-        - Some symbols may have no recent news available
-    """
+    """Yahoo Finance news client."""
     
     def __init__(self):
-        """
-        Initialize the News client.
-        
-        No authentication is required as this uses Yahoo Finance's public API.
-        The client is stateless and can be reused for multiple requests.
-        """
+        """Initialize the News client."""
         pass
     
     def get_news(self, symbol: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
-        """
-        Get recent news articles for a stock from Yahoo Finance API.
-        
-        Retrieves the latest news articles related to a specific stock symbol.
-        News data includes headlines, summaries, publication dates, and source links.
-        
-        API Endpoint: Uses yfinance ticker.news property
-        Rate Limit: No explicit limit, but excessive requests may be throttled
-        Data Freshness: Updated in real-time as news is published
-        Coverage: Varies by symbol; major stocks have more comprehensive coverage
-        
-        Args:
-            symbol (str): Stock ticker symbol (e.g., 'AAPL', 'TSLA', 'GOOGL')
-            limit (Optional[int]): Maximum number of articles to return.
-                                 If None, returns all available articles (typically 10-20)
-            
-        Returns:
-            List[Dict[str, Any]]: List of news article dictionaries with keys:
-                - title (str): Article headline
-                - summary (str): Article summary/description
-                - link (str): URL to full article
-                - publisher (str): News source/publisher name
-                - published_date (str): Publication date in 'YYYY-MM-DD HH:MM:SS' format
-                - type (str): Article type/category
-                - thumbnail (Optional[str]): URL to article thumbnail image
-                
-        Raises:
-            Exception: If symbol is invalid or API request fails
-            
-        Example:
-            >>> client = NewsClient()
-            >>> news = client.get_news("AAPL", limit=5)
-            >>> for article in news:
-            ...     print(f"Title: {article['title']}")
-            ...     print(f"Publisher: {article['publisher']}")
-            ...     print(f"Date: {article['published_date']}")
-            
-        Note:
-            - News availability varies significantly by symbol
-            - Some symbols may have no recent news
-            - Articles are typically from the last few days to weeks
-        """
+        """Get recent news articles."""
         try:
             ticker = yf.Ticker(symbol)
             news = ticker.news
@@ -138,37 +72,7 @@ class NewsClient:
             raise Exception(f"Error fetching news for {symbol}: {str(e)}")
     
     def get_news_summary(self, symbol: str, limit: int = 5) -> str:
-        """
-        Get a formatted summary of recent news for a stock.
-        
-        Provides a human-readable summary of recent news articles with titles,
-        publishers, dates, summaries, and links formatted for easy reading.
-        
-        Args:
-            symbol (str): Stock ticker symbol (e.g., 'AAPL', 'TSLA', 'GOOGL')
-            limit (int): Maximum number of news articles to include (default: 5)
-            
-        Returns:
-            str: Formatted string with news summary including:
-                - Article titles and numbering
-                - Publisher information
-                - Publication dates
-                - Article summaries (truncated if long)
-                - Direct links to full articles
-                
-        Raises:
-            Exception: If symbol is invalid or API request fails
-            
-        Example:
-            >>> client = NewsClient()
-            >>> summary = client.get_news_summary("AAPL", limit=3)
-            >>> print(summary)
-            
-        Note:
-            - Returns a user-friendly message if no news is found
-            - Long summaries are automatically truncated to 200 characters
-            - All errors are handled gracefully with descriptive messages
-        """
+        """Get formatted news summary."""
         try:
             news = self.get_news(symbol, limit)
             
@@ -199,28 +103,7 @@ class NewsClient:
             return f"Error fetching news summary for {symbol}: {str(e)}"
     
     def get_news_headlines(self, symbol: str, limit: int = 10) -> List[str]:
-        """
-        Get just the headlines from recent news articles.
-        
-        A convenience method that returns only the article titles,
-        useful for quick news scanning or when you only need headlines.
-        
-        Args:
-            symbol (str): Stock ticker symbol (e.g., 'AAPL', 'TSLA', 'GOOGL')
-            limit (int): Maximum number of headlines to return (default: 10)
-            
-        Returns:
-            List[str]: List of article headlines/titles
-            
-        Raises:
-            Exception: If symbol is invalid or API request fails
-            
-        Example:
-            >>> client = NewsClient()
-            >>> headlines = client.get_news_headlines("AAPL", limit=5)
-            >>> for headline in headlines:
-            ...     print(f"• {headline}")
-        """
+        """Get news headlines only."""
         try:
             news = self.get_news(symbol, limit)
             return [article['title'] for article in news if article['title'] != 'N/A']
@@ -228,29 +111,7 @@ class NewsClient:
             raise Exception(f"Error fetching news headlines for {symbol}: {str(e)}")
     
     def search_news_by_keyword(self, symbol: str, keyword: str, limit: int = 10) -> List[Dict[str, Any]]:
-        """
-        Search for news articles containing a specific keyword.
-        
-        Filters news articles to only include those that contain the specified
-        keyword in either the title or summary.
-        
-        Args:
-            symbol (str): Stock ticker symbol (e.g., 'AAPL', 'TSLA', 'GOOGL')
-            keyword (str): Keyword to search for (case-insensitive)
-            limit (int): Maximum number of articles to search through (default: 10)
-            
-        Returns:
-            List[Dict[str, Any]]: List of matching news articles with same structure as get_news()
-            
-        Raises:
-            Exception: If symbol is invalid or API request fails
-            
-        Example:
-            >>> client = NewsClient()
-            >>> earnings_news = client.search_news_by_keyword("AAPL", "earnings", limit=20)
-            >>> for article in earnings_news:
-            ...     print(f"Found: {article['title']}")
-        """
+        """Search news by keyword."""
         try:
             news = self.get_news(symbol, limit)
             keyword_lower = keyword.lower()
