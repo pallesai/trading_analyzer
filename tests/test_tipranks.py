@@ -2,7 +2,7 @@
 Test script for TipRanks news client.
 """
 
-from news.tip_ranks import TipRanksNewsClient
+from trading_analyzer.news.tip_ranks import TipRanksNewsClient
 
 
 def test_tipranks_news():

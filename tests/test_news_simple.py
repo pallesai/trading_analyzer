@@ -1,6 +1,6 @@
 """Simple test for news API functionality."""
 
-from news import NewsClient
+from trading_analyzer.news.news_client import NewsClient
 
 def test_news_api():
     """Test basic news API functionality."""

@@ -12,21 +12,21 @@ def test_imports():
     
     try:
         # Test HTTP client
-        from http_client import HTTPClient
+        from trading_analyzer.http_client.client import HTTPClient
         print("✓ HTTP client import successful")
         
         # Test news clients
-        from news.news_client import NewsClient
+        from trading_analyzer.news.news_client import NewsClient
         print("✓ YFinance news client import successful")
         
-        from news.tip_ranks import TipRanksNewsClient
+        from trading_analyzer.news.tip_ranks import TipRanksNewsClient
         print("✓ TipRanks news client import successful")
         
-        from news.unified_news_client import UnifiedNewsClient
+        from trading_analyzer.news.unified_news_client import UnifiedNewsClient
         print("✓ Unified news client import successful")
         
         # Test trading API
-        from trading_api.yfinance_client import YFinanceClient
+        from trading_analyzer.trading_api.yfinance_client import YFinanceClient
         print("✓ YFinance trading client import successful")
         
         return True
@@ -43,22 +43,22 @@ def test_basic_functionality():
     
     try:
         # Test HTTP client
-        from http_client import HTTPClient
+        from trading_analyzer.http_client.client import HTTPClient
         client = HTTPClient()
         print("✓ HTTP client instantiation successful")
         client.close()
         
         # Test news clients
-        from news.news_client import NewsClient
+        from trading_analyzer.news.news_client import NewsClient
         news_client = NewsClient()
         print("✓ YFinance news client instantiation successful")
         
-        from news.tip_ranks import TipRanksNewsClient
+        from trading_analyzer.news.tip_ranks import TipRanksNewsClient
         tr_client = TipRanksNewsClient()
         print("✓ TipRanks news client instantiation successful")
         tr_client.close()
         
-        from news.unified_news_client import UnifiedNewsClient
+        from trading_analyzer.news.unified_news_client import UnifiedNewsClient
         unified_client = UnifiedNewsClient()
         print("✓ Unified news client instantiation successful")
         unified_client.close()

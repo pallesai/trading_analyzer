@@ -2,8 +2,9 @@
 Test script for the unified news client.
 """
 
-from news.unified_news_client import UnifiedNewsClient
 import json
+
+from trading_analyzer.news.unified_news_client import UnifiedNewsClient
 
 
 def test_unified_news():
