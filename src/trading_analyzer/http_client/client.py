@@ -2,10 +2,11 @@
 Simple and generic HTTP client with GET and POST methods.
 """
 
-import requests
 import json
-from typing import Dict, Any, Optional, Union
+from typing import Any, Dict, Optional, Union
 from urllib.parse import urljoin
+
+import requests
 
 
 class HTTPClient:

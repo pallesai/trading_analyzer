@@ -1,10 +1,11 @@
 """Tests for the HTTP client module."""
 
-import pytest
-import requests
 from unittest.mock import Mock, patch
 
-from http_client.client import HTTPClient
+import pytest
+import requests
+
+from trading_analyzer.http_client.client import HTTPClient
 
 
 class TestHTTPClient:
@@ -62,7 +63,7 @@ class TestHTTPClient:
         
         client.close()
 
-    @patch('http_client.client.requests.Session.get')
+    @patch('trading_analyzer.http_client.client.requests.Session.get')
     def test_get_success(self, mock_get):
         """Test successful GET request."""
         # Setup mock
@@ -77,7 +78,7 @@ class TestHTTPClient:
         mock_get.assert_called_once()
         client.close()
 
-    @patch('http_client.client.requests.Session.get')
+    @patch('trading_analyzer.http_client.client.requests.Session.get')
     def test_get_with_params(self, mock_get):
         """Test GET request with parameters."""
         mock_response = Mock()
@@ -96,7 +97,7 @@ class TestHTTPClient:
         )
         client.close()
 
-    @patch('http_client.client.requests.Session.post')
+    @patch('trading_analyzer.http_client.client.requests.Session.post')
     def test_post_with_json(self, mock_post):
         """Test POST request with JSON data."""
         mock_response = Mock()

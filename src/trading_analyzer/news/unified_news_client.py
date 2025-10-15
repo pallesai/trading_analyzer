@@ -2,10 +2,10 @@
 Unified news client that aggregates news from multiple sources (yfinance and TipRanks).
 """
 
-import sys
 import os
-from typing import Dict, List, Any, Optional
+import sys
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 # Import existing news clients
 from .news_client import NewsClient

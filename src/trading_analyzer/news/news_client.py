@@ -1,8 +1,9 @@
 """News client for stock news retrieval using Yahoo Finance API."""
 
-import yfinance as yf
-from typing import Optional, List, Dict, Any
 from datetime import datetime
+from typing import Any, Dict, List, Optional
+
+import yfinance as yf
 
 
 class NewsClient:

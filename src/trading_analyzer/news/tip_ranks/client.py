@@ -2,15 +2,14 @@
 TipRanks news client for fetching stock news by ticker.
 """
 
-import sys
 import os
-from typing import Dict, List, Any, Optional
+import sys
+from typing import Any, Dict, List, Optional
 
 # Add the parent directory to the path to import http_client
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from http_client import HTTPClient
-
 
 # API Constants
 API_ENDPOINTS = {

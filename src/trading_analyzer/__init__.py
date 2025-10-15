@@ -13,8 +13,8 @@ __author__ = "Trading Analyzer Team"
 __email__ = "contact@trading-analyzer.com"
 
 # Import main classes for easy access
-from http_client.client import HTTPClient
-from news.unified_news_client import UnifiedNewsClient
+from .http_client.client import HTTPClient
+from .news.unified_news_client import UnifiedNewsClient
 
 __all__ = [
     "UnifiedNewsClient",
