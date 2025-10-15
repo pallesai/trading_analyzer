@@ -15,4 +15,8 @@ src/trading_analyzer/news/tip_ranks/__init__.py
 src/trading_analyzer/news/tip_ranks/client.py
 src/trading_analyzer/trading_api/__init__.py
 src/trading_analyzer/trading_api/yfinance_client.py
+tests/test_build.py
 tests/test_http_client.py
+tests/test_news_simple.py
+tests/test_tipranks.py
+tests/test_unified_news.py
