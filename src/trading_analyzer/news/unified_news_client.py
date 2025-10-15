@@ -6,7 +6,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 # Import existing news clients
-from .news_client import NewsClient
+from .yfinance import YFNewsClient
 from .tip_ranks import TipRanksNewsClient
 
 
@@ -22,7 +22,7 @@ class UnifiedNewsClient:
         Args:
             timeout (int): Request timeout in seconds for API calls
         """
-        self.yfinance_client = NewsClient()
+        self.yfinance_client = YFNewsClient()
         self.tipranks_client = TipRanksNewsClient(timeout=timeout)
 
     def _standardize_yfinance_article(self, article: Dict[str, Any]) -> Dict[str, Any]:

@@ -6,11 +6,11 @@ from typing import Any, Dict, List, Optional
 import yfinance as yf
 
 
-class NewsClient:
+class YFNewsClient:
     """Yahoo Finance news client."""
 
     def __init__(self):
-        """Initialize the News client."""
+        """Initialize the YFNews client."""
         pass
 
     def get_news(

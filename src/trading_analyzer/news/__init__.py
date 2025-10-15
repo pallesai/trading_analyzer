@@ -1,5 +1,7 @@
-"""News API module for stock news retrieval."""
+"""News clients for various data sources."""
 
-from .news_client import NewsClient
+from .yfinance import YFNewsClient
+from .tip_ranks import TipRanksNewsClient
+from .unified_news_client import UnifiedNewsClient
 
-__all__ = ["NewsClient"]
+__all__ = ["YFNewsClient", "TipRanksNewsClient", "UnifiedNewsClient"]

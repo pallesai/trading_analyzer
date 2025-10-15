@@ -17,7 +17,7 @@ def test_imports():
         print("✓ HTTP client import successful")
 
         # Test news clients
-        from trading_analyzer.news.news_client import NewsClient  # noqa: F401
+        from trading_analyzer.news.yfinance import YFNewsClient  # noqa: F401
 
         print("✓ YFinance news client import successful")
 
@@ -59,9 +59,9 @@ def test_basic_functionality():
         client.close()
 
         # Test news clients
-        from trading_analyzer.news.news_client import NewsClient
+        from trading_analyzer.news.yfinance import YFNewsClient
 
-        news_client = NewsClient()  # noqa: F841
+        news_client = YFNewsClient()  # noqa: F841
         print("✓ YFinance news client instantiation successful")
 
         from trading_analyzer.news.tip_ranks import TipRanksNewsClient

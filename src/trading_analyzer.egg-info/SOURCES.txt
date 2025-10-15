@@ -9,10 +9,11 @@ src/trading_analyzer.egg-info/top_level.txt
 src/trading_analyzer/http_client/__init__.py
 src/trading_analyzer/http_client/client.py
 src/trading_analyzer/news/__init__.py
-src/trading_analyzer/news/news_client.py
 src/trading_analyzer/news/unified_news_client.py
 src/trading_analyzer/news/tip_ranks/__init__.py
 src/trading_analyzer/news/tip_ranks/client.py
+src/trading_analyzer/news/yfinance/__init__.py
+src/trading_analyzer/news/yfinance/news_client.py
 src/trading_analyzer/trading_api/__init__.py
 src/trading_analyzer/trading_api/yfinance_client.py
 tests/test_build.py

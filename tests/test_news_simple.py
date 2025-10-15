@@ -1,13 +1,13 @@
 """Simple test for news API functionality."""
 
-from trading_analyzer.news.news_client import NewsClient
+from trading_analyzer.news.yfinance import YFNewsClient
 
 
 def test_news_api():
     """Test basic news API functionality."""
     print("Testing News API...\n")
 
-    client = NewsClient()
+    client = YFNewsClient()
 
     # Test 2: Get detailed news
     print("2. Testing detailed news for NVDA:")

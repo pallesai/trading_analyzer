@@ -37,7 +37,7 @@ def test_imports():
         print("✓ HTTP client import successful")
 
         # Test news clients
-        from trading_analyzer.news.news_client import NewsClient
+        from trading_analyzer.news.yfinance import YFNewsClient
 
         print("✓ YFinance news client import successful")
 
