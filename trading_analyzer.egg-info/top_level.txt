@@ -1,0 +1,4 @@
+http_client
+news
+trading_analyzer
+trading_api
