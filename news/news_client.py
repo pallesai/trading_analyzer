@@ -35,10 +35,18 @@ class NewsClient:
                 if content is None:
                     continue
                 
+                # Handle clickThroughUrl which can be None or a dict
+                click_through = content.get('clickThroughUrl')
+                if click_through and isinstance(click_through, dict):
+                    link = click_through.get('url', 'N/A')
+                else:
+                    canonical = content.get('canonicalUrl', {})
+                    link = canonical.get('url', 'N/A') if canonical else 'N/A'
+                
                 formatted_article = {
                     'title': content.get('title', 'N/A'),
                     'summary': content.get('summary', content.get('description', 'N/A')),
-                    'link': content.get('clickThroughUrl', {}).get('url', content.get('canonicalUrl', {}).get('url', 'N/A')),
+                    'link': link,
                     'publisher': content.get('provider', {}).get('displayName', 'N/A'),
                     'published_date': content.get('pubDate', content.get('displayTime', None)),
                     'type': content.get('contentType', 'N/A'),
