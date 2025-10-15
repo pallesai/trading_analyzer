@@ -1,5 +1,6 @@
 README.md
 pyproject.toml
+setup.cfg
 src/trading_analyzer/__init__.py
 src/trading_analyzer.egg-info/PKG-INFO
 src/trading_analyzer.egg-info/SOURCES.txt

@@ -5,9 +5,10 @@ Unified news client that aggregates news from multiple sources (yfinance and Tip
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
+from .tip_ranks import TipRanksNewsClient
+
 # Import existing news clients
 from .yfinance import YFNewsClient
-from .tip_ranks import TipRanksNewsClient
 
 
 class UnifiedNewsClient:

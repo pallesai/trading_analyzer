@@ -12,9 +12,7 @@ def run_command(command: str, description: str) -> bool:
     """Run a command and return success status."""
     print(f"Running: {description}")
     try:
-        result = subprocess.run(
-            command.split(), capture_output=True, text=True, check=True
-        )
+        subprocess.run(command.split(), capture_output=True, text=True, check=True)
         print(f"✓ {description} - SUCCESS")
         return True
     except subprocess.CalledProcessError as e:
@@ -32,25 +30,29 @@ def test_imports():
 
     try:
         # Test HTTP client
-        from trading_analyzer.http_client.client import HTTPClient
+        from trading_analyzer.http_client.client import HTTPClient  # noqa: F401
 
         print("✓ HTTP client import successful")
 
         # Test news clients
-        from trading_analyzer.news.yfinance import YFNewsClient
+        from trading_analyzer.news.yfinance import YFNewsClient  # noqa: F401
 
         print("✓ YFinance news client import successful")
 
-        from trading_analyzer.news.tip_ranks import TipRanksNewsClient
+        from trading_analyzer.news.tip_ranks import TipRanksNewsClient  # noqa: F401
 
         print("✓ TipRanks news client import successful")
 
-        from trading_analyzer.news.unified_news_client import UnifiedNewsClient
+        from trading_analyzer.news.unified_news_client import (  # noqa: F401
+            UnifiedNewsClient,
+        )
 
         print("✓ Unified news client import successful")
 
         # Test trading API
-        from trading_analyzer.trading_api.yfinance_client import YFinanceClient
+        from trading_analyzer.trading_api.yfinance_client import (  # noqa: F401
+            YFinanceClient,
+        )
 
         print("✓ YFinance trading client import successful")
 
