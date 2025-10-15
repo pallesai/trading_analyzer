@@ -42,52 +42,344 @@ Requires-Dist: pytest-mock>=3.10.0; extra == "test"
 
 # Trading Analyzer
 
-Yahoo Finance data access with Python.
+A comprehensive trading analysis toolkit providing multi-source news aggregation, market data analysis, and HTTP client utilities for trading API integrations.
 
-## Install
-```bash
-# Create virtual environment (recommended)
-python -m venv venv
+## Features
 
-# Activate virtual environment
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
+- **Multi-source News Aggregation**: Unified news client combining YFinance and TipRanks
+- **HTTP Client**: Generic HTTP client with GET/POST methods for API integrations
+- **Market Data Analysis**: YFinance integration for stock data retrieval
+- **Modern Python Packaging**: Uses `pyproject.toml` and `src/` layout following PEP 518/621
+- **Comprehensive Testing**: Full test suite with pytest
 
-# Install dependencies
-pip install -r requirements.txt
-# OR manually:
-pip install yfinance pandas
+## Project Structure
+
+```
+trading_analyzer/
+├── src/trading_analyzer/          # Main package source code
+│   ├── http_client/              # Generic HTTP client
+│   ├── news/                     # News aggregation modules
+│   │   ├── news_client.py        # YFinance news client
+│   │   ├── tip_ranks/            # TipRanks news client
+│   │   └── unified_news_client.py # Unified news aggregator
+│   └── trading_api/              # Trading API integrations
+│       └── yfinance_client.py    # YFinance data client
+├── tests/                        # Test suite
+├── pyproject.toml               # Modern Python packaging config
+├── .gitignore                   # Git ignore rules
+└── README.md                    # This file
 ```
 
-## Troubleshooting
-If you get `ModuleNotFoundError: No module named 'yfinance'`:
-1. Make sure virtual environment is activated: `source venv/bin/activate`
-2. Install dependencies: `pip install -r requirements.txt`
-3. In IntelliJ IDEA, verify Python interpreter points to `venv/bin/python`
+## Installation
+
+### Prerequisites
+
+- Python 3.8 or higher
+- pip (Python package installer)
+
+### Setup Instructions
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd trading_analyzer
+   ```
+
+2. **Create and activate virtual environment** (recommended)
+   ```bash
+   # Create virtual environment
+   python -m venv venv
+   
+   # Activate virtual environment
+   # On Windows:
+   venv\Scripts\activate
+   # On macOS/Linux:
+   source venv/bin/activate
+   ```
+
+3. **Install the package in development mode**
+   ```bash
+   # This installs the package and all dependencies
+   pip install -e .
+   ```
+
+   **Alternative: Install dependencies only**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Verify Installation
+
+```bash
+# Test that all dependencies are installed
+python -c "import trading_analyzer; print('✓ Trading Analyzer installed successfully')"
+
+# Run the build verification script
+python tests/test_build.py
+```
+
+## Quick Start
+
+Here's a simple example to get you started:
+
+```python
+from trading_analyzer.news.unified_news_client import UnifiedNewsClient
+
+# Create unified news client
+client = UnifiedNewsClient()
+
+# Get latest news for Apple
+news = client.get_unified_news("AAPL", limit_per_source=3)
+
+print(f"Found {news['total_articles']} articles from {len(news['sources'])} sources")
+
+# Display first few articles
+for article in news['articles'][:5]:
+    print(f"• [{article['source'].upper()}] {article['title']}")
+    print(f"  Publisher: {article['publisher']} | Date: {article['published_date']}")
+
+client.close()
+```
 
 ## Usage
+
+### HTTP Client (For Advanced Users)
+
+The package includes a generic HTTP client for API integrations:
+
 ```python
-from trading_api import YFinanceClient
-from news import NewsClient
+from trading_analyzer.http_client.client import HTTPClient
 
-# Stock data
+# Create HTTP client
+client = HTTPClient(base_url="https://api.example.com")
+
+# Make GET request
+response = client.get("/endpoint")
+data = client.get_json("/data")  # Returns JSON directly
+
+# Make POST request
+response = client.post("/submit", json_data={"key": "value"})
+
+# Use as context manager
+with HTTPClient() as client:
+    response = client.get("https://httpbin.org/get")
+    print(response.json())
+```
+
+### News Aggregation
+
+#### YFinance News Client
+
+```python
+from trading_analyzer.news.news_client import NewsClient
+
+client = NewsClient()
+
+# Get news for a ticker
+news = client.get_news("AAPL", limit=10)
+for article in news:
+    print(f"Title: {article['title']}")
+    print(f"Publisher: {article['publisher']}")
+    print(f"URL: {article['link']}")
+```
+
+#### TipRanks News Client
+
+```python
+from trading_analyzer.news.tip_ranks import TipRanksNewsClient
+
+client = TipRanksNewsClient()
+
+# Get news for a ticker
+news = client.get_news("AAPL")
+details = client.get_news_with_details("AAPL")
+
+client.close()  # Don't forget to close the HTTP session
+```
+
+#### Unified News Client (Recommended)
+
+```python
+from trading_analyzer.news.unified_news_client import UnifiedNewsClient
+
+client = UnifiedNewsClient()
+
+# Get unified news from all sources
+unified_news = client.get_unified_news("AAPL", limit_per_source=5)
+
+print(f"Total articles: {unified_news['total_articles']}")
+print(f"Sources: {', '.join(unified_news['sources'])}")
+
+# Access articles in standardized format
+for article in unified_news['articles']:
+    print(f"[{article['source'].upper()}] {article['title']}")
+    print(f"Publisher: {article['publisher']}")
+    print(f"Date: {article['published_date']}")
+    print(f"Sentiment: {article['sentiment']}")
+
+# Get news from specific source
+yf_articles = client.get_news_by_source("AAPL", "yfinance", limit=3)
+tr_articles = client.get_news_by_source("AAPL", "tipranks", limit=3)
+
+# Get news summary
+summary = client.get_news_summary("AAPL", limit_per_source=5)
+print(summary)
+
+client.close()
+```
+
+### Trading API
+
+```python
+from trading_analyzer.trading_api.yfinance_client import YFinanceClient
+
 client = YFinanceClient()
+
+# Get current stock price
 price = client.get_current_price("AAPL")
-data = client.get_historical_data("AAPL", period="1y")
+print(f"AAPL current price: ${price}")
 
-# News
-news_client = NewsClient()
-headlines = news_client.get_news_headlines("AAPL", limit=5)
+# Get historical data
+data = client.get_historical_data("AAPL", period="1mo")
+print(data.head())
+
+# Get stock info
+info = client.get_stock_info("AAPL")
+print(f"Company: {info.get('longName')}")
+print(f"Sector: {info.get('sector')}")
 ```
 
-## Verify Installation
+## Development
+
+### Running Tests
+
 ```bash
-# Check if dependencies are installed
-python -c "import yfinance, pandas; print('✓ All dependencies installed')"
+# Run all tests with pytest
+python -m pytest tests/ -v
+
+# Run specific test file
+python -m pytest tests/test_http_client.py -v
+
+# Run tests with coverage
+python -m pytest tests/ --cov=trading_analyzer --cov-report=html
+
+# Run individual test files directly
+python tests/test_unified_news.py
+python tests/test_build.py
 ```
 
-## Test
+### Code Quality
+
+The project uses several code quality tools:
+
 ```bash
-python test_news_simple.py
+# Format code with black
+black src/ tests/
+
+# Sort imports with isort
+isort src/ tests/
+
+# Type checking with mypy
+mypy src/
+
+# Linting with flake8
+flake8 src/ tests/
+```
+
+### Project Structure Guidelines
+
+- **Source code**: All package code goes in `src/trading_analyzer/`
+- **Tests**: All test files go in `tests/` directory
+- **Import paths**: Use full package imports (e.g., `from trading_analyzer.http_client.client import HTTPClient`)
+- **Development mode**: Always install with `pip install -e .` for development
+
+## Troubleshooting
+
+### Common Issues
+
+1. **ModuleNotFoundError: No module named 'trading_analyzer'**
+   ```bash
+   # Make sure you've installed the package in development mode
+   pip install -e .
+   ```
+
+2. **Import errors when running tests directly**
+   ```bash
+   # Ensure the package is installed in development mode
+   pip install -e .
+   # Then you can run: python tests/test_unified_news.py
+   ```
+
+3. **Virtual environment issues**
+   ```bash
+   # Make sure virtual environment is activated
+   source venv/bin/activate  # macOS/Linux
+   venv\Scripts\activate     # Windows
+   
+   # Verify you're using the right Python
+   which python  # Should point to venv/bin/python
+   ```
+
+4. **Missing dependencies**
+   ```bash
+   # Reinstall all dependencies
+   pip install -e .
+   # Or manually install requirements
+   pip install -r requirements.txt
+   ```
+
+### Verification Commands
+
+```bash
+# Check Python version
+python --version
+
+# Check if package is installed
+pip list | grep trading-analyzer
+
+# Test all imports
+python -c "
+from trading_analyzer.http_client.client import HTTPClient
+from trading_analyzer.news.unified_news_client import UnifiedNewsClient
+from trading_analyzer.trading_api.yfinance_client import YFinanceClient
+print('✓ All imports successful')
+"
+
+# Run build verification
+python tests/test_build.py
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests (`python -m pytest tests/`)
+5. Run code quality checks (`black src/ tests/ && isort src/ tests/`)
+6. Commit your changes (`git commit -m 'Add amazing feature'`)
+7. Push to the branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Dependencies
+
+- **yfinance**: Yahoo Finance data access
+- **pandas**: Data manipulation and analysis
+- **requests**: HTTP library for API calls
+- **pytest**: Testing framework
+- **black**: Code formatter
+- **isort**: Import sorter
+- **mypy**: Static type checker
+- **flake8**: Code linter
+
+## Support
+
+If you encounter any issues:
+
+1. Check the [Troubleshooting](#troubleshooting) section
+2. Run the build verification: `python tests/test_build.py`
+3. Check that all tests pass: `python -m pytest tests/ -v`
+4. Open an issue on GitHub with details about your environment and the error
