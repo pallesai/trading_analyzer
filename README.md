@@ -14,8 +14,16 @@ venv\Scripts\activate
 source venv/bin/activate
 
 # Install dependencies
+pip install -r requirements.txt
+# OR manually:
 pip install yfinance pandas
 ```
+
+## Troubleshooting
+If you get `ModuleNotFoundError: No module named 'yfinance'`:
+1. Make sure virtual environment is activated: `source venv/bin/activate`
+2. Install dependencies: `pip install -r requirements.txt`
+3. In IntelliJ IDEA, verify Python interpreter points to `venv/bin/python`
 
 ## Usage
 ```python
@@ -32,31 +40,12 @@ news_client = NewsClient()
 headlines = news_client.get_news_headlines("AAPL", limit=5)
 ```
 
+## Verify Installation
+```bash
+# Check if dependencies are installed
+python -c "import yfinance, pandas; print('✓ All dependencies installed')"
+```
+
 ## Test
 ```bash
 python test_news_simple.py
-```
-
-## IntelliJ IDEA Setup (macOS)
-1. Open IntelliJ IDEA
-2. File → Open → Select this project folder
-3. Configure Python interpreter:
-   - IntelliJ IDEA → Preferences → Project → Python Interpreter
-   - Click gear icon → Add → Virtualenv Environment → Existing environment
-   - Point to `venv/bin/python` in your project folder
-4. Run files:
-   - Right-click `test_news_simple.py` → Run 'test_news_simple'
-   - Or use green play button in toolbar
-   - Or press Ctrl+Shift+R
-
-## Terminal Commands (macOS)
-```bash
-# Navigate to project folder
-cd /path/to/trading_analyzer
-
-# Activate virtual environment
-source venv/bin/activate
-
-# Run test
-python test_news_simple.py
-```

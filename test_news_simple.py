@@ -12,7 +12,11 @@ def test_news_api():
     print("2. Testing detailed news for NVDA:")
     try:
         news = client.get_news("NVDA", limit=10)
-        print(f"News {news}")
+        
+        for i in news:
+            print(f" Article --> {i}")
+            print()
+
     except Exception as e:
         print(f"   Error: {e}")
     
