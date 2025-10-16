@@ -1,5 +1,12 @@
 # Trading Analyzer
 
+[![CI](https://github.com/pallesai/trading_analyzer/workflows/CI/badge.svg)](https://github.com/pallesai/trading_analyzer/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/pallesai/trading_analyzer/branch/main/graph/badge.svg)](https://codecov.io/gh/pallesai/trading_analyzer)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A comprehensive trading analysis toolkit providing multi-source news aggregation, market data analysis, and HTTP client utilities for trading API integrations.
 
 ## Features
@@ -32,7 +39,7 @@ trading_analyzer/
 
 ### Prerequisites
 
-- Python 3.8 or higher
+- Python 3.9 or higher
 - pip (Python package installer)
 
 ### Setup Instructions
